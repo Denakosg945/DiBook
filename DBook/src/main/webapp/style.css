@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+body {
+    background-image: linear-gradient(to bottom right, bisque, blanchedalmond);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#info-field {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 40px 60px;
+    width: 350px;
+    transition: transform 0.3s ease;
+}
+
+
+#info-field h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+#info-field form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#info-field input[type="text"],
+#info-field input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+#info-field input[type="text"]:focus,
+#info-field input[type="password"]:focus {
+    border-color: #ffa500;
+    outline: none;
+}
+
+#info-field input[type="submit"] {
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#info-field input[type="submit"]:hover {
+    background-color: #e67e00;
+}
+
+#info-field p {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#info-field a {
+    text-decoration: none;
+    color: #ff8c00;
+    font-weight: bold;
+}
+
+#info-field a:hover {
+    text-decoration: underline;
+}
