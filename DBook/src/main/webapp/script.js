@@ -1,3 +1,22 @@
+//Adds a not exists small element for the username check
+export const NotExists = document.createElement("small");
+NotExists.id = `NotExists`;
+NotExists.textContent = `This username does not exist!`;
+NotExists.style.color = 'red';
+NotExists.style.display = "flex";
+NotExists.style.justifyContent = "center";  
+NotExists.style.alignItems = "center"; 
+
+//Adds a passwords mismatch small element for the password check
+export const pwdNoMatch = document.createElement("small");
+pwdNoMatch.id = `pwdNoMatch`;
+pwdNoMatch.textContent = `The passwords do not match!`;
+pwdNoMatch.style.color = `red`;
+pwdNoMatch.style.display = "flex";
+pwdNoMatch.style.justifyContent = "center";  
+pwdNoMatch.style.alignItems = "center"; 
+
+
 //debounce function because checking every ms will be taxxing for the system.
 export function debounce(func, delay=500){
     let timer;
@@ -9,146 +28,35 @@ export function debounce(func, delay=500){
     }
 }
 
-export function initUsernameCheck(){
-	
-	//Get elements from the page using document object
-	const unameInput = document.getElementById("uname");
-	const submitButton = document.getElementById("submit-btn");
-	const logInHeader = document.querySelector("h1");
-	const pwdInput = document.getElementById("pwd");
-	const existsInput = document.getElementById("exists-input");
-	
-	//sends a request in the back-end to check if the username exists (sent in json form).
-	async function checkUsername(username){
-	    try {
-	        const response = await fetch('/DBook/CheckUserServlet', {
-	            method: 'POST',
-	            headers: {
-	                'Content-Type': 'application/json',
-	            },
-	            body: JSON.stringify({ username: username }),
-	        });
+//Adds a old and new passwords match to inform the user to change the new password
+export const alreadyExists = document.createElement("small");
+alreadyExists.id = `alreadyExists`;
+alreadyExists.textContent = `This password is the current password!`;
+alreadyExists.style.color = 'red';
+alreadyExists.style.display = "flex";
+alreadyExists.style.justifyContent = "center";  
+alreadyExists.style.alignItems = "center"; 
 
-	        if (!response.ok) {
-	            const message = `Error has occurred: ${response.status}`;
-	            throw new Error(message);
-	        }
+export const passwordChanged = document.createElement("small");
+passwordChanged.id = `passwordChanged`;
+passwordChanged.textContent = `The password was successfully changed!`;
+passwordChanged.style.color = 'lime';
+passwordChanged.style.display = "flex";
+passwordChanged.style.justifyContent = "center";  
+passwordChanged.style.alignItems = "center"; 
 
-	        const exists = await response.json();
-			
-			//if the account doesn't exist sets the button to create account and reverts it if the user exists
-			if(!exists.exists){
-				createAccountButton();
-			}else{
-				revertToLogIn();
-			}
-			
-	    } catch (error) {
-	        console.error("Failed to check username:", error.message);
-	    }
-	}
-	
-	//calls the debounce function which calls checkUsername every 500 ms
-	const debounceUsernameCheck = debounce(() => {
-	    checkUsername(unameInput.value);
-	},500);
-
-	unameInput.addEventListener("input",debounceUsernameCheck);
-
-	//changes the buttons to create account and the header
-	function createAccountButton(){
-		
-		logInHeader.textContent = "Create Account";
-		submitButton.value = "Create Account!";
-		
-	}
-	
-	function revertToLogIn(){
-		
-		//reverts the buttons to log in form
-		logInHeader.textContent = "Log-In Form";
-		submitButton.value = "Log-In";
-		
-	}
-
-}
+export const passwordChangedErr = document.createElement("small");
+passwordChangedErr.id = `passwordChangedErr`;
+passwordChangedErr.textContent = `The password could not be changed...Check your submitted info and try again!`;
+passwordChangedErr.style.color = 'red';
+passwordChangedErr.style.display = "flex";
+passwordChangedErr.style.justifyContent = "center";  
+passwordChangedErr.style.alignItems = "center"; 
 
 
 
-export function initPasswordCheck() {
-	const newPassword = document.getElementById("newPwd");
-	const newPasswordVerify = document.getElementById("newPwdVerify");
-	const forgotBtn = document.getElementById("forgot-btn");
-	const unameInput = document.getElementById("resetPageUname");
 
-	let usernameExists = false;
 
-	async function checkResetUname(username) {
-		try {
-			const response = await fetch('/DBook/CheckUserServlet', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ username: username }),
-			});
-
-			if (!response.ok) {
-				throw new Error(`Error occurred: ${response.status}`);
-			}
-
-			const exists = await response.json();
-			usernameExists = exists.exists;
-			updateButtonState();
-		} catch (error) {
-			console.error("Failed to check username:", error.message);
-			usernameExists = false;
-			updateButtonState();
-		}
-	}
-
-	function doPasswordsMatch() {
-		const pwd1 = newPassword.value.trim();
-		const pwd2 = newPasswordVerify.value.trim();
-		return pwd1 !== "" && pwd1 === pwd2 && passwordRegExTest(pwd1);
-	}
-
-	function updateButtonState() {
-		// Enable only if username exists AND passwords match
-		if (usernameExists && doPasswordsMatch()) {
-			forgotBtn.removeAttribute("disabled");
-		} else {
-			forgotBtn.setAttribute("disabled", "true");
-		}
-	}
-	
-	function passwordRegExTest(pwd){
-		if(pwd.length < 5){
-			return false;
-		}
-		
-		const passwordRegex = new RegExp("^(?=.*[A-Za-z])(?=.*\\d).+$");
-		if(passwordRegex.test(pwd)){
-			return true;
-		}
-		return false;
-		
-	}
-
-	const debounceUsernameCheck = debounce(() => {
-		checkResetUname(unameInput.value);
-	}, 500);
-
-	const debouncePasswordCheck = debounce(() => {
-		updateButtonState();
-	}, 500);
-	
-	
-
-	unameInput.addEventListener("input", debounceUsernameCheck);
-	newPassword.addEventListener("input", debouncePasswordCheck);
-	newPasswordVerify.addEventListener("input", debouncePasswordCheck);
-}
 
 
 

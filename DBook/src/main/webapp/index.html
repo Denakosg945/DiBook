@@ -4,17 +4,17 @@
     <title>DBook</title>
     <link rel="stylesheet" href="style.css">
     <script type="module">
-		import { initUsernameCheck } from './script.js';
+		import { RegisterLoginModule } from './registerLoginScript.js';
 
 		document.addEventListener("DOMContentLoaded", () => {
-			initUsernameCheck();
+			RegisterLoginModule();
 		});
-</script>
+	</script>
   </head>
   <body>
     <div id="info-field">
       <h1 id="LogIn_Create-header">Log-In Form</h1>
-      <form action="/DBook/regLog" method="post">
+      <form id="submitForm">
         <input type="text" id="uname" name="uname" placeholder="Enter your name" required>
         <input type="password" id="pwd" name="pwd" placeholder="Enter password" required>
         <input type="submit" value="Log-In" id="submit-btn">

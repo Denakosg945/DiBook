@@ -1,6 +1,7 @@
 
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,12 +18,16 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.google.gson.JsonObject;
 
 /**
  * Servlet implementation class regLog
  */
 @WebServlet("/regLog")
+@MultipartConfig
 public class regLog extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private String url = "jdbc:mariadb://localhost:3306/forumdb";
@@ -53,13 +58,12 @@ public class regLog extends HttpServlet {
 		
 		String username = request.getParameter("uname");
 		String password = request.getParameter("pwd");
-		System.out.println(username + " " + password);
 		
 		response.setContentType("application/json");
 		
 		if(username == null || password == null || password.isEmpty() || username.isEmpty()) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response.getWriter().write("{\"Error\": \"Username or password is empty\"");
+			response.getWriter().write("{\"Error\": \"Username or password is empty\"}");
 			return;
 		}
 		//Verify again if the name exists
@@ -83,7 +87,7 @@ public class regLog extends HttpServlet {
             }
         } catch (IOException e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("{\"error\": \"Failed to check user: " + e.getMessage() + "\"}");
+            response.getWriter().write("{\"error\": \"Failed to check user \"}");
             return;
         } finally {
             connection.disconnect();
@@ -97,18 +101,40 @@ public class regLog extends HttpServlet {
 	
 
 		
+		JsonObject jsonResponse = new JsonObject();
 		
 		if(!userExists) {
 			boolean created = createAccount(username,password);
+			jsonResponse.addProperty("status", "created");
+		    jsonResponse.addProperty("success", created);
 			if(created) {
 				response.setStatus(HttpServletResponse.SC_OK);
-				response.getWriter().write("{\"Success\": \"Account successfully created!\"");
+				response.setContentType("application/json");
+				response.getWriter().write(jsonResponse.toString());
 			}else {
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				response.getWriter().write("{\"Error\": \"Failed to create account!\"");
+				response.setContentType("application/json");
+				response.getWriter().write(jsonResponse.toString());
 			}
 		}else {
-			logIn(username,password);
+			int logged = logIn(username,password);
+
+		    boolean success = logged > 0;
+		    jsonResponse.addProperty("success", success);
+		    if (success) {
+			    jsonResponse.addProperty("status", "logged");
+
+		        jsonResponse.addProperty("userId", logged);
+		        response.setStatus(HttpServletResponse.SC_OK);
+		    } else {
+		        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			    jsonResponse.addProperty("status", "error");
+		        jsonResponse.addProperty("userId", logged);
+		        jsonResponse.addProperty("error", "Login failed");
+		    }
+		    response.setStatus(HttpServletResponse.SC_OK);
+		    response.setContentType("application/json");
+		    response.getWriter().write(jsonResponse.toString());
 		}
 		
 	}
@@ -133,6 +159,8 @@ public class regLog extends HttpServlet {
 			int rowsAffected = statement.executeUpdate();
 			connection.commit();
 			
+			
+			
 			if(!connection.isClosed()) {
 				connection.close();
 			}
@@ -145,11 +173,47 @@ public class regLog extends HttpServlet {
 		}
 	}
 	
-	private boolean logIn(String username,String password) {
+	private int logIn(String username,String password) {
+		String hashedPassword = Hashing.getHash256(password);
+		int id = -1;
+		try {
+			
+			try {
+				Class.forName("org.mariadb.jdbc.Driver");
+			}catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+			Connection connection = DriverManager.getConnection(url,user,pwd);
+			String sql = "SELECT id FROM users WHERE uname = ? AND upasshash = ?";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, username);
+			statement.setString(2, hashedPassword);
+			
+			// Execute the query
+			ResultSet resultSet = statement.executeQuery();
+
+			// Check if a result was found
+			
+			if (resultSet.next()) {
+			    id = resultSet.getInt("id");
+			}
+
+			resultSet.close();
+			statement.close();
+			
+			if(!connection.isClosed()) {
+				connection.close();
+			}
+			
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
+		return id;
 		
-		
-		return false;
 	}
 
 }
