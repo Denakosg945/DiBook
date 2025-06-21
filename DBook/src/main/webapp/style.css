@@ -80,3 +80,47 @@ body {
 #info-field a:hover {
     text-decoration: underline;
 }
+
+.dropdown {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .dropdown-btn,.createTopic,.uploadMessage {
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: #fff;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      border-radius: 4px;
+      z-index: 1;
+      margin-top: 2px;
+      background-image: linear-gradient(to bottom right, bisque, blanchedalmond);
+    }
+    .dropdown-content button {
+      width: 100%;
+      padding: 10px 20px;
+      border: solid;
+      background: none;
+      text-align: left;
+      cursor: pointer;
+      font-size: 16px;
+      color: #333;
+      border-radius: 5px;
+    }
+    .dropdown-content button:hover {
+      background: #ff8c00;
+      
+    }
+    .dropdown.show .dropdown-content {
+      display: block;
+    }

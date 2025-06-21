@@ -61,21 +61,27 @@ public class CheckLogin extends HttpServlet {
 				String sql = "SELECT id FROM users WHERE id=?";
 				
 				PreparedStatement statement = connection.prepareStatement(sql);
-				statement.setInt(1,Integer.parseInt(cookieUID));
-				ResultSet idSet = statement.executeQuery();
 				
-				if(idSet.next()) {
-					logged = true;
+				if(cookieUID != null && !cookieUID.isEmpty() && cookieUID.matches("\\d+")) {
+				    // Now it's safe to parse
+				    statement.setInt(1, Integer.parseInt(cookieUID));
+				    ResultSet idSet = statement.executeQuery();
+				    
+				    if(idSet.next()) {
+				        logged = true;
+				    }
+				    
+				    idSet.close();
+				    statement.close();
+				    
+				    if(!connection.isClosed()) {
+				        connection.close();
+				    }
+				} else {
+				    // Invalid cookieUID: empty, null, or not a number
+				    logged = false;
 				}
-				
-				idSet.close();
-				statement.close();
-				
-				if(!connection.isClosed()) {
-					connection.close();
-				}
-				
-				
+					
 				
 			}catch(SQLException e) {
 				e.printStackTrace();

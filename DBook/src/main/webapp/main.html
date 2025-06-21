@@ -4,9 +4,24 @@
 	<meta charset="UTF-8">
 	<title>DBook - Main menu</title>
 	<link rel="stylesheet" href="style.css">
+	<script type="module">
+		import { mainFunctionality } from './mainScript.js';
+
+		document.addEventListener("DOMContentLoaded", () => {
+			mainFunctionality();
+		});
+	</script>
 </head>
 <body>
-
+	<div class="dropdown" id="settingsDropdown">
+		<button class="uploadMessage" id="messageBtn"><b>Upload Message</b></button>
+		<button class ="createTopic" id="topicBtn"><b>Create Topic</b></button>
+		<button class="dropdown-btn" id="settingsBtn"><b>Settings ▼</b></button>
+		<div class="dropdown-content">
+			<button id="infoBtn">Show Account Information</button>
+			<button id="signOutBtn">Sign Out</button>
+		</div>
+		
+	</div>
 </body>
-
 </html>
