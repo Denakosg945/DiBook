@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Create Topic</title>
+	<link rel="stylesheet" href="style.css">
+	<script type="module">
+		import {topicScript} from './topicScript.js'
+		document.addEventListener("DOMContentLoaded", () => {
+			topicScript();
+		});
+	</script>
+</head>
+<body>
+	<div>
+		<h1 id="mainHeader" class="headers">DBook</h1>
+		<form class="topicForm">
+			<label for="topicName" class="nameInfo"><b>Topic Name</b></label>
+			<input id="topic" name="topicName" type="text" class="nameInfo" required>
+			<label for="topicDescription" class="descriptionInfo"><b>Topic Description</b></label>
+			<textarea id="description" name="topicDescription" class="descriptionInfo" rows="4" style="resize: vertical;"></textarea>
+			<input type="submit" id="topicBtn" value="Create new topic!"> 
+		</form>
+		<button class="goBack" id="backBtn"><b>Go Back</b></button>
+	</div>
+</body>
+</html>

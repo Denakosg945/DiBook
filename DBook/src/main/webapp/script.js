@@ -53,7 +53,21 @@ passwordChangedErr.style.display = "flex";
 passwordChangedErr.style.justifyContent = "center";  
 passwordChangedErr.style.alignItems = "center"; 
 
+export const topicCreated = document.createElement("small");
+topicCreated.id = `topicCreated`;
+topicCreated.textContent = `The topic was successfully created!`;
+topicCreated.style.color = 'lime';
+topicCreated.style.display = "flex";
+topicCreated.style.justifyContent = "center";  
+topicCreated.style.alignItems = "center"; 
 
+export const topicNotCreated = document.createElement("small");
+topicNotCreated.id = `topicNotCreated`;
+topicNotCreated.textContent = `The topic could not be created!`;
+topicNotCreated.style.color = 'red';
+topicNotCreated.style.display = "flex";
+topicNotCreated.style.justifyContent = "center";  
+topicNotCreated.style.alignItems = "center"; 
 
 
 

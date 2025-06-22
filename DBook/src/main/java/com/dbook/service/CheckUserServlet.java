@@ -1,6 +1,8 @@
-
-
 // Servlet API
+package com.dbook.service;
+
+
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -95,6 +97,7 @@ public class CheckUserServlet extends HttpServlet {
 			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
+			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().write(jsonResponse);
 			
 			if(!connection.isClosed()) {

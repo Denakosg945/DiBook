@@ -1,19 +1,22 @@
 import {debounce} from './script.js';
 
+
 export function RegisterLoginModule(){
+	
+	//checks cookie and redirects to the main if the user is signed in
 	window.onload = async function(){
-		const response = await fetch("/DBook/CheckLogin",{
-			method: 'GET',
-			credentials: 'include' //sends cookies
-		})
-		
-		const data = await response.json();
-		console.log(data.logged);
-		
-		if(data.logged){
-			window.location.href = "/DBook/main.html";
-		}
-	}
+					const response = await fetch("/DBook/CheckLogin",{
+						method: 'GET',
+						credentials: 'include' //sends cookies
+					})
+					
+					const data = await response.json();
+					
+					if(data.logged){
+						window.location.href = "/DBook/main.html";
+					}
+				}
+	
 	//Adds a small element to inform the user about the successfull account creation!
 	const success = document.createElement("small");
 	success.id = `successCreation`;

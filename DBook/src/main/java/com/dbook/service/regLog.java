@@ -1,3 +1,4 @@
+package com.dbook.service;
 
 
 import jakarta.servlet.ServletException;
@@ -157,7 +158,6 @@ public class regLog extends HttpServlet {
 			statement.setString(2, hashedPassword);
 			
 			int rowsAffected = statement.executeUpdate();
-			connection.commit();
 			
 			
 			

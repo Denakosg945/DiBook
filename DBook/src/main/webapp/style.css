@@ -81,12 +81,12 @@ body {
     text-decoration: underline;
 }
 
-.dropdown {
+.dropdown,#backBtn {
       position: absolute;
       top: 20px;
       right: 20px;
     }
-    .dropdown-btn,.createTopic,.uploadMessage {
+    .dropdown-btn,.createTopic,.uploadMessage,#backBtn,#topicBtn {
       padding: 10px 20px;
       background: #007bff;
       color: #fff;
@@ -124,3 +124,56 @@ body {
     .dropdown.show .dropdown-content {
       display: block;
     }
+    
+.headers {
+    position: fixed;
+    top: 30px;
+    left: 10px;
+    
+}
+
+#username {
+	position: fixed;
+	top: 100px;
+	left : 10px;
+}
+
+#UID {
+	position: fixed;
+	top: 120px;
+	left: 10px;
+}
+
+
+#header {
+    text-decoration: underline;
+}
+
+#mainHeader {
+	position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 36px;
+}
+
+.topicForm {
+			display: flex;
+			flex-direction: column;
+			max-width: 400px; 
+			margin: auto;     
+			gap: 25px;
+			border: solid;
+			padding: 70px;
+			border-radius: 35px 0 35px 0;         
+		}
+
+.topicForm label,
+.topicForm input {
+			width: 100%;
+			box-sizing: border-box;
+		}
+		
+#description {
+	height: 150px;
+}
