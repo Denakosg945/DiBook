@@ -69,8 +69,13 @@ topicNotCreated.style.display = "flex";
 topicNotCreated.style.justifyContent = "center";  
 topicNotCreated.style.alignItems = "center"; 
 
-
-
+export const messageNotUploaded = document.createElement("small");
+messageNotUploaded.id = `messageNotUploaded`;
+messageNotUploaded.textContent = `The message could not be uploaded!`;
+messageNotUploaded.style.color = 'red';
+messageNotUploaded.style.display = "flex";
+messageNotUploaded.style.justifyContent = "center";  
+messageNotUploaded.style.alignItems = "center"; 
 
 
 

@@ -68,13 +68,16 @@ export function RegisterLoginModule(){
 					}
 					const data = await response.json();
 
-					
-					if(data.status === "create"){	
+					console.log(data);
+					if(data.status === "created"){	
 										
 						fail.remove();
 						success.remove();
-						if(data.Created){
+						if(data.success){
 							infoField.appendChild(success);
+							setTimeout(() => {
+							    window.location.reload();
+							}, 2000);
 						}else{
 							infoField.appendChild(fail);
 							

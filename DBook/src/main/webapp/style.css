@@ -10,6 +10,14 @@ body {
     justify-content: center;
 }
 
+body.topicMessageBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh; 
+}
+
 #info-field {
     display: flex;
     flex-direction: column;
@@ -177,3 +185,28 @@ body {
 #description {
 	height: 150px;
 }
+
+  #messageDiv {
+    margin: 0;
+    padding: 0;
+
+  }
+
+#messageForm {
+    margin-top: 20px;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    left: 50%;
+   	
+}
+  
+#formDivider {
+    border: none;
+    border-top: 2px solid #ccc;
+    width: 100%;
+    margin: 10px auto;
+}
+

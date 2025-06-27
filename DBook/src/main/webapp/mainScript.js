@@ -46,4 +46,8 @@ export function mainFunctionality() {
 	createTopicBtn.addEventListener("click", function() {
 		window.location.href = "/DBook/createTopic.html";
 	});
+	
+	uploadMessageBtn.addEventListener("click", function() {
+		window.location.href = "/DBook/TopicPage.jsp";
+	})
 }
